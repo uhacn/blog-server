@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const errorType = require('../constants/errorType');
 const md5password = require('../utils/passwordHandler')
 const { User } = require('../models/index')
-const { PUBLIC_KEY } = require('../app/config')
+// const { PUBLIC_KEY } = require('../app/config')
 
 // 用户注册验证中间件
 const verifyReg = async (ctx, next) => {
@@ -81,12 +81,9 @@ const verifyToken = async (ctx, next) => {
     return ctx.app.emit('error', error, ctx)
   }
   const token = authorization.substr(7)
-
   // 2.验证token(id/name/iat/exp)
   try {
-    const result = jwt.verify(token, PUBLIC_KEY, {
-      algorithms: ["RS256"]
-    });
+    const result = jwt.verify(token, 'blog-server');
     ctx.user = result;
     ctx.body = '验证成功'
     await next()

@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 
-const { userReg, userLogin, pwdModify,userAdd, userFindAll, userFindOne, userUpdate, userDelete } = require('../controller/user.controller')
+const { userReg, userLogin, pwdModify, getAvatar } = require('../controller/user.controller')
 const { verifyReg, verifyLogin, verifyToken, passwordHandler } = require('../middleware/user.middleware')
 
 const userRouter = new Router({ prefix: '/user' })
@@ -15,42 +15,10 @@ userRouter.post('/login', verifyLogin, userLogin)
 userRouter.post('/verify', verifyToken)
 
 // 修改密码
-userRouter.patch('/pwd', pwdModify)
+userRouter.patch('/pwd',passwordHandler,pwdModify)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 添加系统用户
-userRouter.post('/', userAdd)
-
-// 查询所有系统用户
-userRouter.get('/', userFindAll)
-
-// 查询单个系统用户
-userRouter.get('/:id', userFindOne)
-
-
-// 修改系统用户
-userRouter.patch('/:id', userUpdate)
-
-// 删除系统用户
-userRouter.delete('/:id', userDelete)
-
+// 
+userRouter.get('/avatar/:username', getAvatar)
 
 
 module.exports = userRouter

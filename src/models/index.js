@@ -4,10 +4,10 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
-  avatar: {
+  avatarUrl: {
     type: String,
     default: ''
-  },
+  }
   // sex: {
   //   type: String,
   //   default: ''
