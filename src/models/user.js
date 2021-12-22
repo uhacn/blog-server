@@ -7,23 +7,23 @@ const userSchema = new mongoose.Schema({
   avatarUrl: {
     type: String,
     default: ''
+  },
+  sex: {
+    type: String,
+    default: ''
+  },
+  desc: {
+    type: String,
+    default: ''
+  },
+  phone: {
+    type: String,
+    default: ''
+  },
+  email: {
+    type: String,
+    default: ''
   }
-  // sex: {
-  //   type: String,
-  //   default: ''
-  // },
-  // desc: {
-  //   type: String,
-  //   default: ''
-  // },
-  // phone: {
-  //   type: String,
-  //   default: ''
-  // },
-  // email: {
-  //   type: String,
-  //   default: ''
-  // }
 })
 
 const User = mongoose.model('users', userSchema)

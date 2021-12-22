@@ -1,6 +1,6 @@
 const { AVATAR_PATH } = require('../constants/filePath');
 const { APP_HOST, APP_PORT } = require('../app/config')
-const { User } = require('../models/index')
+const { User } = require('../models/user')
 const { File } = require('../models/file')
 
 class FileController {

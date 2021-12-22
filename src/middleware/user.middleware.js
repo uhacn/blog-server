@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const errorType = require('../constants/errorType');
 const md5password = require('../utils/passwordHandler')
-const { User } = require('../models/index')
+const { User } = require('../models/user')
 // const { PUBLIC_KEY } = require('../app/config')
 
 // 用户注册验证中间件
@@ -73,6 +73,7 @@ const verifyLogin = async (ctx, next) => {
   await next()
 }
 
+// 验证token
 const verifyToken = async (ctx, next) => {
   // 1. 获取token
   const authorization = ctx.header.authorization;
@@ -85,7 +86,7 @@ const verifyToken = async (ctx, next) => {
   try {
     const result = jwt.verify(token, 'blog-server');
     ctx.user = result;
-    ctx.body = '验证成功'
+    ctx.body = {code: 200, user: result}
     await next()
   } catch (err) {
     console.log(err);
