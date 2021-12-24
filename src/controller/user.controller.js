@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs')
 
 // const { PRIVATE_KEY } = require('../app/config')
-const { User } = require('../models/user')
-const { File } = require('../models/file')
+const User = require('../model/user.model')
+const File = require('../model/file.model')
 const { AVATAR_PATH } = require('../constants/filePath')
 const errorType = require('../constants/errorType');
 
@@ -29,7 +29,7 @@ class UserController {
   }
 
   // 修改密码
-  async pwdModify(ctx) {
+  async updatePwd(ctx) {
     const { username, password } = ctx.request.body
     await User.updateOne({ username }, { password })
       .then(res => {
@@ -60,7 +60,7 @@ class UserController {
   }
 
   // 修改用户个人信息
-  async userinfoModify(ctx, next) {
+  async updateUserInfo(ctx, next) {
     // 1. 获取要修改的信息
     let { _id, avatar = '', sex = '', desc = '', phone = '', email = '' } = ctx.request.body
     // 2. 对信息进行修改

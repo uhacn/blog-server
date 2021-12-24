@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   title: String,
   createTime: String,
   content: String,
-  stemfrom: String,
+  stemFrom: String,
   read: {
       type: Number,
       default: 0
@@ -24,6 +24,4 @@ const userSchema = new mongoose.Schema({
 
 const Article = mongoose.model('article', userSchema, 'article')
 
-module.exports = {
-  Article
-}
+module.exports =  Article

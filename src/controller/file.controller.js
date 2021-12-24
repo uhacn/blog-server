@@ -1,7 +1,6 @@
-const { AVATAR_PATH } = require('../constants/filePath');
 const { APP_HOST, APP_PORT } = require('../app/config')
-const { User } = require('../models/user')
-const { File } = require('../models/file')
+const User = require('../model/user.model')
+const File = require('../model/file.model')
 
 class FileController {
   async createAvatar(ctx, next) {
@@ -9,7 +8,7 @@ class FileController {
     const { username } = ctx.state.user;
     // 上传头像
     await File.create({ username, filename, mimetype, size }).then(res => {
-      ctx.body = res
+      ctx.body = res 
     }).catch(err => {
       ctx.body = { msg: "上传头像异常", err }
     })

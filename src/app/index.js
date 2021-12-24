@@ -3,7 +3,7 @@ const bodyparser = require('koa-bodyparser')
 const cors = require('koa2-cors');
 const koaJwt = require('koa-jwt')
 
-const useRoutes = require('../routers/index')
+const useRoutes = require('../router/index')
 const errorHandler = require('./errorHandler')
 // const { PUBLIC_KEY, PRIVATE_KEY } = require('./config')
 

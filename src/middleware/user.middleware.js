@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const errorType = require('../constants/errorType');
 const md5password = require('../utils/passwordHandler')
-const { User } = require('../models/user')
+const User  = require('../model/user.model')
 // const { PUBLIC_KEY } = require('../app/config')
 
 // 用户注册验证中间件

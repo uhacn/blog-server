@@ -7,6 +7,6 @@ const fileRouter = new Router({ prefix: '/upload' });
 
 
 fileRouter.post('/avatar', avatarHandler, createAvatar);
-fileRouter.post('/picture/:momentId', pictureHandler, pictureResize, createPicture );
+fileRouter.post('/picture', pictureHandler, pictureResize, createPicture );
 
 module.exports = fileRouter; 
