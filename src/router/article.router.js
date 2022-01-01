@@ -1,7 +1,7 @@
 const Router = require('koa-router');
 
 
-const { createArticle, getAllArticle, getOneArticle, updateArticle, removeArticle } = require('../controller/article.controller');
+const { createArticle, getAllArticle, getOneArticle, updateArticle, removeArticle, getPicture } = require('../controller/article.controller');
 
 const articleRouter = new Router({ prefix: '/article' });
 
@@ -19,5 +19,8 @@ articleRouter.patch('/:id', updateArticle);
 
 // 删除文章
 articleRouter.delete('/:id', removeArticle);
+
+// 获取文章配图
+articleRouter.get('/picture/:articleId', getPicture);
 
 module.exports = articleRouter;

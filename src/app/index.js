@@ -10,18 +10,14 @@ const errorHandler = require('./errorHandler')
 const app = new Koa()
 
 app.use(cors())
-
 app.use(koaJwt({ secret: 'blog-server' }).unless({
-  path: [/^\/user\/login/, /^\/user\/reg/, /^\/user\/avatar/]
+  path: [/^\/user\/login/, /^\/user\/reg/, /^\/user\/avatar/, /^\/article\/picture/]
 }))
-
 app.use(bodyparser())
-
-
-
 useRoutes(app)
 
 app.on('error', errorHandler);
+
 
 
 module.exports = app

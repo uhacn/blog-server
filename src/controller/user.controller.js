@@ -3,7 +3,7 @@ const fs = require('fs')
 
 // const { PRIVATE_KEY } = require('../app/config')
 const User = require('../model/user.model')
-const File = require('../model/file.model')
+const Avatar = require('../model/avatar.model')
 const { AVATAR_PATH } = require('../constants/filePath')
 const errorType = require('../constants/errorType');
 
@@ -14,8 +14,7 @@ class UserController {
     await User.create({ username, password }).then(res => {
       ctx.body = res
     }).catch(err => {
-      ctx.body = '注册异常',
-        console.error(err)
+      ctx.body = '注册异常'
     })
   }
 
@@ -34,13 +33,15 @@ class UserController {
     await User.updateOne({ username }, { password })
       .then(res => {
         if (res.modifiedCount > 0) {
-          ctx.body = res
+          ctx.body = { code: 200, msg: '密码修改成功' }
         } else {
           const error = new Error(errorType.PASSWORD_MODIFY_FAILED);
           return ctx.app.emit('error', error, ctx)
         }
       })
       .catch(err => {
+        console.log(111);
+
         ctx.body = '密码修改失败'
       })
   }
@@ -49,7 +50,7 @@ class UserController {
   async getAvatar(ctx, next) {
     const { username } = ctx.params;
     let result = ''
-    await File.find({ username }).then(res => {
+    await Avatar.find({ username }).then(res => {
       // 取最后一个上传头像
       result = res.pop()
     });
@@ -66,9 +67,9 @@ class UserController {
     // 2. 对信息进行修改
     await User.updateOne({ _id }, { avatar, sex, desc, phone, email }).then(res => {
       if (res.modifiedCount > 0) {
-        ctx.body = { code: 200, msg: '信息修改成功' }
+        ctx.body = { code: 200, msg: '资料修改成功' }
       } else {
-        ctx.body = { code: 400, msg: '信息修改失败' }
+        ctx.body = { code: 400, msg: '资料修改失败' }
       }
     }).catch(err => {
       ctx.body = '资料更新异常'

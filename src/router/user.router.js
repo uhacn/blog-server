@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { userReg, userLogin, updatePwd, getAvatar, updateUserInfo } = require('../controller/user.controller')
-const { verifyReg, verifyLogin, verifyToken, passwordHandler } = require('../middleware/user.middleware')
+const { verifyReg, verifyLogin, verifyToken, verifyUpdatePwd,passwordHandler } = require('../middleware/user.middleware')
 
 const userRouter = new Router({ prefix: '/user' })
 
@@ -15,7 +15,7 @@ userRouter.post('/login', verifyLogin, userLogin)
 userRouter.get('/verify', verifyToken)
 
 // 修改密码
-userRouter.patch('/pwd', passwordHandler, updatePwd)
+userRouter.patch('/pwd', verifyUpdatePwd, passwordHandler, updatePwd)
 
 // 获取用户头像
 userRouter.get('/avatar/:username', getAvatar)

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const errorType = require('../constants/errorType');
 const md5password = require('../utils/passwordHandler')
-const User  = require('../model/user.model')
+const User = require('../model/user.model')
 // const { PUBLIC_KEY } = require('../app/config')
 
 // 用户注册验证中间件
@@ -86,13 +86,43 @@ const verifyToken = async (ctx, next) => {
   try {
     const result = jwt.verify(token, 'blog-server');
     ctx.user = result;
-    ctx.body = {code: 200, user: result}
+    ctx.body = { code: 200, user: result }
     await next()
   } catch (err) {
     console.log(err);
     const error = new Error(errorType.UNAUTHORIZATION);
     ctx.app.emit('error', error, ctx)
-  }   
+  }
+}
+
+// 修改密码验证中间件
+const verifyUpdatePwd = async (ctx, next) => {
+  // 1.获取用户名和密码
+  const { username, password, oldPassword } = ctx.request.body;
+  // 2.判断旧密码是否输入正确
+  let isPwdTrue = false
+  await User.findOne({ username, password: md5password(oldPassword) }).then(res => {
+    if (res) {
+      isPwdTrue = true
+    }
+  }).catch(err => {
+    ctx.body = {
+      code: 500,
+      msg: '登录时出现异常',
+      err
+    }
+  })
+  if (!isPwdTrue) {
+    const error = new Error(errorType.ORIGINAL_PASSWORD_IS_INCORRECT);
+    return ctx.app.emit('error', error, ctx)
+  }
+  // 3. 判断新旧密码是否相同
+  if (password === oldPassword) {
+    const error = new Error(errorType.NEW_OLD_PASSWORD_IS_SAME);
+    return ctx.app.emit('error', error, ctx)
+  }
+
+  await next()
 }
 
 // 将密码加密处理
@@ -103,4 +133,4 @@ const passwordHandler = async (ctx, next) => {
   await next();
 }
 
-module.exports = { verifyReg, verifyLogin, verifyToken, passwordHandler }
+module.exports = { verifyReg, verifyLogin, verifyToken, passwordHandler, verifyUpdatePwd }

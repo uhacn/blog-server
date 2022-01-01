@@ -4,7 +4,8 @@ const USER_DOES_NOT_EXISTS = 'user_does_not_exists';
 const PASSWORD_IS_INCORRECT = 'password_is_incorrect';
 const UNAUTHORIZATION = 'unauthorization';
 const UNPERMISSION = 'unpermission';
-const PASSWORD_MODIFY_FAILED = 'password modify failed'
+const ORIGINAL_PASSWORD_IS_INCORRECT = 'original_password_is_incorrect'
+const NEW_OLD_PASSWORD_IS_SAME = 'new_old_password_is_same'
 
 module.exports = { 
   NAME_OR_PASSWORD_IS_REQUIRED,
@@ -13,5 +14,6 @@ module.exports = {
   PASSWORD_IS_INCORRECT,
   UNAUTHORIZATION,
   UNPERMISSION,
-  PASSWORD_MODIFY_FAILED 
+  ORIGINAL_PASSWORD_IS_INCORRECT,
+  NEW_OLD_PASSWORD_IS_SAME
 }

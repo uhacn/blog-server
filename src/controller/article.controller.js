@@ -1,4 +1,7 @@
+const fs = require('fs')
 const Article = require('../model/article.model')
+const Picture = require('../model/picture.model')
+const { PICTURE_PATH } = require('../constants/filePath')
 
 class ArticleController {
   // 添加文章
@@ -170,6 +173,26 @@ class ArticleController {
         msg: '文章删除时出现异常'
       }
     })
+  }
+
+  async getPicture(ctx, next) { 
+    const { articleId } = ctx.params;
+    let result = ''
+    await Picture.find({ articleId }).then(res => {
+      // 取最后一个上传配图
+      result = res.pop()
+    });
+
+    // 判断是否传有图片大小类型
+    const { size } = ctx.query;
+    const sizes = ['large', 'middle', 'small'];
+    if (sizes.some(item => item == size)) {
+      result.filename = result.filename.split('.')[0] + '-' + size + '.' + result.filename.split('.')[1];
+    }
+    // 设置响应的类型
+    ctx.response.set('content-type', result.mimetype)
+    // 将头像数据放进响应体
+    ctx.body = fs.createReadStream(`${PICTURE_PATH}/${result.filename}`)
   }
 }
 

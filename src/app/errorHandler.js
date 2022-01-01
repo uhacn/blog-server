@@ -19,6 +19,18 @@ const errorHandler = (err, ctx) => {
       status = 400;
       message = "密码不正确";
       break;
+    case errorType.USER_DOES_NOT_EXISTS:
+      status = 400;
+      message = "用户不存在";
+      break;
+    case errorType.ORIGINAL_PASSWORD_IS_INCORRECT:
+      status = 400;
+      message = "原密码不正确";
+      break;
+      case errorType.NEW_OLD_PASSWORD_IS_SAME:
+        status = 409;
+        message = "新密码与原密码不能相同";
+        break;
     case errorType.UNAUTHORIZATION:
       status = 401;
       message = "未授权";
@@ -26,10 +38,6 @@ const errorHandler = (err, ctx) => {
     case errorType.UNPERMISSION:
       status = 401;
       message = "您没有权限修改";
-      break;
-    case errorType.PASSWORD_MODIFY_FAILED:
-      status = 400;
-      message = "密码修改失败";
       break;
     default:
       status = 400;

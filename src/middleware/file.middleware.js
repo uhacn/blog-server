@@ -10,7 +10,7 @@ const avatarUpload = multer({
   storage: multer.diskStorage({
     // 1. 设置文件的存储位置
     destination: function (req, file, cb) {
-      const dir = AVATAR_PATH 
+      const dir = AVATAR_PATH
       // 判断目录是否存在
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true })
@@ -50,11 +50,11 @@ const pictureHandler = pictureUpload.array('picture', 9);
 const pictureResize = async (ctx, next) => {
   const files = ctx.req.files;
   for (let file of files) {
-    const picPath = path.join(file.destination, file.filename);
+    const picPath = path.join(file.destination, file.filename.split('.')[0]);
     jimp.read(file.path).then(image => {
-      image.resize(1280, jimp.AUTO).write(`${picPath}-large`);
-      image.resize(640, jimp.AUTO).write(`${picPath}-middle`);
-      image.resize(320, jimp.AUTO).write(`${picPath}-small`);
+      image.resize(1280, jimp.AUTO).write(`${picPath}-large` + path.extname(file.originalname));
+      image.resize(640, jimp.AUTO).write(`${picPath}-middle` + path.extname(file.originalname));
+      image.resize(320, jimp.AUTO).write(`${picPath}-small` + path.extname(file.originalname));
     })
   }
   await next()
